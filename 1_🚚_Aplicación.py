@@ -120,7 +120,7 @@ with st.spinner("Estimando clusters de envíos..."):
             cluster_fg.add_child(marker)
         mapa.add_child(cluster_fg)  
 
-st_folium(mapa,feature_group_to_add=cluster_fg)
+st_folium(mapa,feature_group_to_add=cluster_fg,use_container_width=True)
         
 
 # st_folium(mapa,feature_group_to_add=fg)
