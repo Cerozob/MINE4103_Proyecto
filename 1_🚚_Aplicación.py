@@ -103,6 +103,7 @@ else:
 
 if "órdenes" in state:
     state.órdenes = state.órdenes.drop(columns=["shopify_id"], errors="ignore") if "shopify_id" in state.órdenes else state.órdenes
+    state.órdenes = state.órdenes.dropna().reset_index(drop=True)
     st.write(f"se han ingresado {human_format(state.órdenes['order_number'].nunique())} pedido/s con {human_format(state.órdenes.shape[0])} SKUs")
     state.órdenes["order_date"] = pd.to_datetime(state.órdenes["order_date"])
     # place 2 date pickers to filter the data
