@@ -17,7 +17,6 @@ from numpy import radians
 if "capacities" not in state:
     rules.load_all()
 
-
 st.set_page_config(page_title="Página principal", page_icon="🏠")
 
 bbox_samples = {"lon1": -74.257278, "lat1": 4.514137,
@@ -152,6 +151,7 @@ if "órdenes" in state:
         # clustering_model = DBSCAN(eps=0.25, min_samples=3,metric='haversine')
         # clustering_model.__name__ = "DBSCAN"
         totalvehicles = result2["num_trucks"] + result2["num_bikes"]
+        st.write(f"{totalvehicles},{state.órdenes.shape[0]}")
         clustering_model = KMeans(n_clusters=min(
             totalvehicles, state.órdenes.shape[0]))
         clustering_model.__name__ = "KMeans"
@@ -174,8 +174,7 @@ if "órdenes" in state:
                 cluster_fg.add_child(marker)
             mapa.add_child(cluster_fg)
 
-        elmapa = st_folium(
-            mapa, feature_group_to_add=cluster_fg, use_container_width=True)
+        elmapa = st_folium(mapa, feature_group_to_add=cluster_fg, use_container_width=True)
         # state.origin = list(elmapa["last_clicked"].values()) if "last_clicked" in elmapa and elmapa["last_clicked"] is not None else [4.652148006033854, -74.11982593339519]
         state.origin = [4.652148006033854, -74.11982593339519]
         # it is lat lon format
