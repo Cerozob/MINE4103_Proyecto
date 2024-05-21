@@ -1,2 +1,1 @@
-ejemplo,template
-hola,1
+order_date,order_number,customer_name,shopify_id,city_order,order_address,product_description,quantity,suero_condition,width,height,depth,latitude,longitude

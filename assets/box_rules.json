@@ -1,0 +1,63 @@
+[
+  {
+    "conditions": {
+      "all": [
+        {
+          "name": "products",
+          "operator": "greater_than_or_equal_to",
+          "value": 6
+        },
+        {
+          "name": "is_sueros",
+          "operator": "is_true",
+          "value": true
+        }
+      ]
+    },
+    "actions": [
+      {
+        "name": "set_num_boxes_sueros"
+      },
+      {
+        "name": "set_num_products_out"
+      }
+    ]
+  },
+  {
+    "conditions": {
+      "all": [
+        {
+          "name": "products",
+          "operator": "less_than",
+          "value": 6
+        }
+      ]
+    },
+    "actions": [
+      {
+        "name": "set_num_products_out"
+      }
+    ]
+  },
+  {
+    "conditions": {
+          "all": [
+               {
+                   "name": "products",
+                   "operator": "greater_than_or_equal_to",
+                   "value": 0
+               },
+                {
+                    "name": "is_sueros",
+                    "operator": "is_false",
+                    "value": true
+                }
+           ]
+       },
+       "actions": [
+           {
+               "name": "set_num_boxes"
+           }
+       ]
+   }
+]

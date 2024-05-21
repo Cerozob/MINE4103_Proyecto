@@ -1,0 +1,39 @@
+[
+  {
+      "conditions": {
+          "any": [
+              {
+                  "name": "num_trucks",
+                  "operator": "greater_than_or_equal_to",
+                  "value": 0
+              },
+              {
+                  "name": "num_bikes",
+                  "operator": "greater_than_or_equal_to",
+                  "value": 0
+              }
+          ]
+      },
+      "actions": [
+          {
+              "name": "set_total_value"
+          }
+      ]
+  },
+  {
+      "conditions": {
+          "all": [
+              {
+                  "name": "distance",
+                  "operator": "greater_than_or_equal_to",
+                  "value": 0
+              }
+          ]
+      },
+      "actions": [
+          {
+              "name": "set_total_value"
+          }
+      ]
+  }
+]
