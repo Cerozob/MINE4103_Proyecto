@@ -14,7 +14,8 @@ import random
 from numpy import radians
 
 
-rules.load_all()
+if "capacities" not in state:
+    rules.load_all()
 
 
 st.set_page_config(page_title="Página principal", page_icon="🏠")
@@ -88,13 +89,13 @@ else:
     st.write("No se ha subido ningún archivo")
 
     st.write("No sabes en qué formato subir tu archivo?, descarga este ejemplo")
-    st.download_button("Descargar ejemplo en csv",
-                       "assets/plantilla_órdenes.csv", "plantilla_órdenes.csv", "text/csv")
-    st.download_button("Descargar ejemplo en xlsx", "assets/plantilla_órdenes.xlsx",
-                       "plantilla_órdenes.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    with open("./assets/plantilla_pedidos.csv", "rb") as f:
+        st.download_button("Descargar ejemplo en csv", f.read(), "plantilla_órdenes.csv", "text/csv")
+    with open("./assets/plantilla_pedidos.xlsx", "rb") as f:
+        st.download_button("Descargar ejemplo en xlsx", f.read(),"plantilla_órdenes.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
     st.write("También puedes ingresar tus órdenes manualmente si lo prefieres")
-    state.órdenes = state.órdenes.drop(columns=["shopify_id"], errors="ignore")
+    state.órdenes = state.órdenes.drop(columns=["shopify_id"], errors="ignore") if "shopify_id" in state.órdenes else state.órdenes
     modificado_df = st.data_editor(state.órdenes, num_rows="dynamic")
 
     st.write("Una vez que hayas ingresado tus órdenes, presiona el botón de abajo para estimar los envíos")
@@ -102,7 +103,7 @@ else:
         state.órdenes = modificado_df
 
 if "órdenes" in state:
-    state.órdenes = state.órdenes.drop(columns=["shopify_id"], errors="ignore")
+    state.órdenes = state.órdenes.drop(columns=["shopify_id"], errors="ignore") if "shopify_id" in state.órdenes else state.órdenes
     st.write(f"se han ingresado {human_format(state.órdenes['order_number'].nunique())} pedido/s con {human_format(state.órdenes.shape[0])} SKUs")
     state.órdenes["order_date"] = pd.to_datetime(state.órdenes["order_date"])
     # place 2 date pickers to filter the data
