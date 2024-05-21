@@ -151,7 +151,7 @@ if "órdenes" in state:
         # clustering_model = DBSCAN(eps=0.25, min_samples=3,metric='haversine')
         # clustering_model.__name__ = "DBSCAN"
         totalvehicles = result2["num_trucks"] + result2["num_bikes"]
-        st.write(f"{totalvehicles},{state.órdenes.shape[0]}")
+        st.write(f"{totalvehicles}, {state.órdenes.shape[0]}, {min(totalvehicles, state.órdenes.shape[0])}")
         clustering_model = KMeans(n_clusters=min(
             totalvehicles, state.órdenes.shape[0]))
         clustering_model.__name__ = "KMeans"
