@@ -151,26 +151,25 @@ if "órdenes" in state:
         # clustering_model = DBSCAN(eps=0.25, min_samples=3,metric='haversine')
         # clustering_model.__name__ = "DBSCAN"
         totalvehicles = result2["num_trucks"] + result2["num_bikes"]
-        st.write(f"{totalvehicles}, {state.órdenes.shape[0]}, {min(totalvehicles, state.órdenes.shape[0])}")
-        clustering_model = KMeans(n_clusters=min(
-            totalvehicles, state.órdenes.shape[0]))
+        # st.write(f"{totalvehicles}, {state.órdenes.shape[0]}, {min(totalvehicles, state.órdenes.shape[0])}")
+        clustering_model = KMeans(n_clusters=min(int(totalvehicles), int(state.órdenes.shape[0])))
         clustering_model.__name__ = "KMeans"
         
         state.órdenes[["lat_std", "lon_std"]] = scaler.fit_transform(
             state.órdenes[["latitude", "longitude"]])
+        alreadytriedrecalculation = False
         if "cluster" not in state.órdenes:
-            state.órdenes["cluster"] = clustering_model.fit_predict(
-                state.órdenes[["lat_std", "lon_std"]])
-        st.write("Viajes estimados")
+            state.órdenes["cluster"] = clustering_model.fit_predict(state.órdenes[["lat_std", "lon_std"]])
         nclusters = state.órdenes["cluster"].nunique()
+        st.write("Viajes estimados")
         print(f"se han estimado {nclusters} envíos")
         for cluster in state.órdenes["cluster"].unique():
             cluster_df = state.órdenes[state.órdenes["cluster"] == cluster]
             cluster_fg = folium.FeatureGroup(name=f"Cluster {cluster}")
             for idx, pedido in cluster_df.iterrows():
                 marker = folium.Marker(location=[pedido["latitude"], pedido["longitude"]],
-                                       popup=f"{pedido['product_description']} - {human_format(pedido['quantity'])} unidades. Vehículo {cluster}",
-                                       icon=folium.Icon(color=colorchoices[cluster % len(colorchoices)], icon="info-sign", icon_color="white"))
+                                    popup=f"{pedido['product_description']} - {human_format(pedido['quantity'])} unidades. Vehículo {cluster}",
+                                    icon=folium.Icon(color=colorchoices[cluster % len(colorchoices)], icon="info-sign", icon_color="white"))
                 cluster_fg.add_child(marker)
             mapa.add_child(cluster_fg)
 

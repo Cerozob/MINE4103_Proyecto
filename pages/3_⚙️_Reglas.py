@@ -16,6 +16,9 @@ def save_json_from_code(code_editor_object):
     code = code_editor_object["text"].strip()
     if save_action == "submit" and len(code) > 0:
         print("updated json from: ",code_editor_object)
+        if state.órdenes is not None and "cluster" in state.órdenes:
+            del state.órdenes["cluster"]
+            print("deleted clusters for recalculation")
         return json.loads(code)
     return None
 
